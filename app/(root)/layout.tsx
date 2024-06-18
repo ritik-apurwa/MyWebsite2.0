@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <section className="flex flex-col">
-      <div className="w-full h-auto">
+      <div className="w-full sticky top-0 h-auto">
         <Nav />
       </div>
       <div className="flex flex-col container max-w-6xl md:py-10 px-3 py-6">

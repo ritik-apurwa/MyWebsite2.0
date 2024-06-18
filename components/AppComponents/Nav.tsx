@@ -1,66 +1,30 @@
 "use client";
 
-import { navigationLinks } from "@/constants/data/Index";
 import Link from "next/link";
-import { Input } from "../ui/input";
 import MobileNav from "./MobileNav";
 import { ModeToggle } from "../ui/themeToggle";
-import { useScroll } from "framer-motion";
-import { useEffect, useState } from "react";
+import Searchbar from "./Searchbar";
+
+import Navigation from "./Navigation";
 
 const Nav = () => {
-  const { scrollY } = useScroll();
-  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const direction = currentScrollY > lastScrollY ? "down" : "up";
-      setScrollDirection(direction);
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const isScrolledDown = scrollDirection === "up";
   return (
-    <section>
-     {isScrolledDown && (
-         <header className="grid grid-cols-12 bg-white max-w-7xl border w-full gap-2  py-4  h-20 items-center md:py-3 lg:py-6">
-         <div className="md:col-span-2 border px-2 col-span-4 size-full flex-center">
-           <Link className="font-bold text-xl antialiased" href="/">
-             HopeWeb
-           </Link>
-         </div>
-         <nav className="md:col-span-4 col-span-6 hidden md:flex ">
-           <ul className="flex-center">
-             {navigationLinks.map((link) => (
-               <li key={link.id}>
-                 <Link href={link.route}>
-                   <span className="text-gray-800 hover:text-gray-600">
-                     {link.lable}
-                   </span>
-                 </Link>
-               </li>
-             ))}
-           </ul>
-         </nav>
-         <div className="md:col-span-3 border px-2 col-span-5 ">
-           <Input className="mr-4" />
-         </div>
-         <div className="flex col-span-3 border gap-x-2 items-center">
-           <ModeToggle />
-           <MobileNav />
-         </div>
-       </header>
-     )}
+    <section className="w-screen flex border-b-2  bg-background z-50 justify-center mx-auto">
+      <header className="grid grid-cols-12  max-w-7xl w-full gap-2 py-2 h-auto  items-center md:py-3 px-1 lg:py-3">
+        <div className="md:col-span-2  px-2 col-span-4 size-full flex justify-start items-center">
+          <Link className="font-bold text-xl antialiased" href="/">
+            HopeWeb
+          </Link>
+        </div>
+        <div className=" hidden lg:flex md:col-span-5">
+          <Navigation />
+        </div>
+        <div className="flex flex-row w-full  relative lg:col-span-5  col-span-8  gap-x-1">
+          <Searchbar />
+          <ModeToggle />
+          <MobileNav />
+        </div>
+      </header>
     </section>
   );
 };

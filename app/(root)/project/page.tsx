@@ -15,8 +15,8 @@ import { Filter } from "lucide-react";
 import Image from "next/image";
 import AllMyComponents from "@/app/Projects";
 import VisibleAnimation from "@/app/Projects/MotionComponents/VisibleMotion";
-import { notfoundsvg } from "@/constants/media/LocalImages";
 import ProjectCard from "@/components/AppComponents/ProjectCard";
+import { Logo } from "@/constants/media/LocalImages";
 
 const ProjectPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -107,7 +107,7 @@ const ProjectPage: React.FC = () => {
                   </h1>
                   <div className="flex-center w-full h-96">
                     <Image
-                      src={notfoundsvg}
+                      src={Logo}
                       height={200}
                       width={200}
                       alt="noufound"

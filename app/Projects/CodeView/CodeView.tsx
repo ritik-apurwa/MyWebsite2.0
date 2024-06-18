@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { FaCheck, FaCopy } from "react-icons/fa";
@@ -42,10 +43,10 @@ const CodeView: React.FC<CodeBlockProps> = ({
   };
 
   // Determine the style based on the current theme
-  const syntaxStyle = theme === "dark" ? vscDarkPlus : a11yLight;
+  const syntaxStyle = theme === "dark" ? vscDarkPlus : vscDarkPlus;
 
   return (
-    <section className="relative h-screen  w-full">
+    <section className="relative h-auto w-full">
       <div className="absolute w-full h-auto max-h-[99%] overflow-y-auto top-0 right-0">
         <SyntaxHighlighter
           customStyle={{

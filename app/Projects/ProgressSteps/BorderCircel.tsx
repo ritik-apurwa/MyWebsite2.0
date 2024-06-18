@@ -31,7 +31,7 @@ export default function DynamicBorderDiv({
     <section>
       <div
         className={cn("relative w-full", {
-          "bg-blue-500 text-white rounded-full": active,
+          " text-white rounded-full": active,
         })}
         style={{ paddingBottom: `${aspectRatio * 100}%` }}
       >
@@ -68,7 +68,7 @@ export default function DynamicBorderDiv({
           </svg>
 
           <div
-            className={`absolute size-[90%] rounded-full  flex-center ${contentBg}`}
+            className={`absolute size-[90%] text-xs rounded-full  flex-center ${contentBg}`}
           >
             {content}
           </div>
@@ -91,15 +91,6 @@ export function Random() {
         showText={false}
         content="d"
       />
-      {/* <DynamicBorderDiv
-        circleColor="text-gray-300"
-        circleRadius={45}
-        strokeWidth={10}
-        contentBg="bg-red-400"
-        progress={progress}
-        progressColor="text-green-600"
-        content={progress}
-      /> */}
     </section>
   );
 }
