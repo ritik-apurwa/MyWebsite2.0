@@ -94,7 +94,7 @@ export function Random() {
     </section>
   );
 }
-export const dynamicCodeString = `
+export const DynamicBorderDivCodeString = `
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 

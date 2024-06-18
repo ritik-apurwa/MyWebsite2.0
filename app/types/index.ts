@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+
 export interface CodeStringInterface {
   filename: string;
   code: string;
@@ -7,11 +8,10 @@ export interface CodeStringInterface {
 
 export interface IComponent {
   id: number;
-  file?: CodeStringInterface;
+  file: CodeStringInterface[]; // Corrected to 'files' instead of 'file'
   projectImg: StaticImageData | string;
   title: string;
   description: string;
   category: "CSS" | "HTML" | "JS" | "React" | "Next.js" | "Backend";
-  component?: JSX.Element; // This is the correct type for a React component
-  code: string;
+  component?: JSX.Element;
 }

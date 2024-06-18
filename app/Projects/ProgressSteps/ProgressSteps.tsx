@@ -4,7 +4,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
-import DynamicBorderDiv, { dynamicCodeString } from "./BorderCircel";
+import DynamicBorderDiv from "./BorderCircel";
 import { PSVarients, contentData } from "@/constants/data/Index";
 
 const ProgressStep = () => {
@@ -106,7 +106,7 @@ const ProgressStep = () => {
 
 export default ProgressStep;
 
-const CheckCodeString = ` 
+export const ProgressStepCodeString = ` 
 
 import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -216,6 +216,4 @@ export default ProgressStep;
 
 
 
-`
-export const CompleteCodeString = CheckCodeString + ' ' + dynamicCodeString;
-
+`;

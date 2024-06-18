@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AllMyComponents from "@/app/Projects";
-import CodeView from "@/app/Projects/CodeView/CodeView";
+
+import { ExpandingCardsFiles } from "@/app/Projects/CodeString";
+import { CodeView } from "@/app/Projects/CodeView/CodeView";
 
 interface Props {
   params: {
@@ -17,7 +19,7 @@ export default function ProjectPage({ params }: Props) {
   const formattedTitle = title.replace(/ /g, "-").toLowerCase();
   const component = AllMyComponents.find(
     (c) => c.title.toLowerCase() === formattedTitle
-  )
+  );
 
   if (!component) {
     notFound();
@@ -106,11 +108,7 @@ export default function ProjectPage({ params }: Props) {
             {component.component}
           </TabsContent>
           <TabsContent key="code-content" className="" value="code">
-            <CodeView
-              showCopyButton={true}
-              language={getLanguageName(component.category)}
-              code={component.code}
-            />
+           <CodeView files={component.file} controls={true}/>
           </TabsContent>
           <TabsContent key="cover-content" value="cover">
             <Cover />

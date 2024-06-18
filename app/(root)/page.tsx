@@ -1,46 +1,29 @@
-import {
-  AnimationS,
-  AnimationT,
-  AnimationX,
-  AnimationY,
-} from "@/components/gsap/AnimationBasic";
-import React from "react";
-import CodeView from "../Projects/CodeView/CodeView";
-import CodeView2 from "../Projects/CodeView/CodeView2";
+"use client";
 
-const page = () => {
+import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
+import { CodeView2Code, NormalText } from "../Projects/CodeString";
+import { CodeView } from "../Projects/CodeView/CodeView";
+
+
+const Page = () => {
+  const { resolvedTheme } = useTheme();
+  const [theme, setTheme] = useState<string>();
+
+  useEffect(() => {
+    if (resolvedTheme) {
+      setTheme(resolvedTheme);
+    }
+  }, [resolvedTheme]);
+
   return (
-    <div className="flex flex-col gap-y-2">
-      <CodeView2 code={codeStringt} fileName="App.tsx" language="typescript" />
-      <div id="normal_div">
-        hlo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore
-        ipsum dolor sit minima
-      </div>
-    </div>
+    <section className="flex flex-col h-full gap-x-4">
+      {theme}
+
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
+    </section>
   );
 };
 
-export default page;
-
-const codeStringt = ` 
-import {
-  AnimationS,
-  AnimationT,
-  AnimationX,
-  AnimationY,
-} from "@/components/gsap/AnimationBasic";
-import React from "react";
-import CodeView from "../Projects/CodeView/CodeView";
-
-const page = () => {
-  return (
-    <div className="flex flex-col gap-y-2">
-      <CodeView2 code={codeStringt} language="javascript" />
-      <div id="normal_div">
-        hlo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore
-        ipsum dolor sit minima
-      </div>
-    </div> ritik 
-  );
-};
-`;
+export default Page;

@@ -1,109 +1,172 @@
-"use client"
-import React, { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { FaCheck, FaCopy } from "react-icons/fa";
-import { a11yLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { AnimatePresence, motion } from "framer-motion";
+"use client";
+import React, { useEffect, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import { useTheme } from "next-themes";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useToast } from "@/components/ui/use-toast";
+import {
+  atomOneDark,
+  atomOneLight,
+} from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-interface CodeBlockProps {
-  language: string;
-  code: string;
-  showCopyButton?: boolean;
+import { CodeStringInterface } from "@/app/types";
+import { FileDropdown } from "./FileDropDown";
+import { CopyToClipboard } from "./CopyButton";
+
+interface CodeViewProps {
+  files: CodeStringInterface[];
+  controls?: boolean;
 }
 
-const CodeView: React.FC<CodeBlockProps> = ({
-  language,
-  code,
-  showCopyButton = true,
-}) => {
-  const { toast } = useToast();
-  const [copied, setCopied] = useState<boolean>(false);
-  const { theme } = useTheme();
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      toast({
-        title: "Copied!",
-        description: `The ${language} code has been copied to your clipboard`,
-      });
-      setTimeout(() => {
-        setCopied(false);
-      }, 1000);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to copy the code to clipboard",
-      });
+export const CodeView = ({ files, controls }: CodeViewProps) => {
+  const { resolvedTheme } = useTheme();
+  const [theme, setTheme] = useState<string>();
+  const [codeHeight, setcodeHeight] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<CodeStringInterface>(
+    files[0]
+  );
+  useEffect(() => {
+    if (resolvedTheme) {
+      setTheme(resolvedTheme);
     }
+  }, [resolvedTheme]);
+
+  const customtheme = theme === "dark" ? atomOneDark : atomOneLight;
+  const CustomBG = theme === "dark" ? "#09090B" : "white";
+  const CustomText = theme === "dark" ? "white" : "black";
+
+  useEffect(() => {
+    const codeLines = selectedFile.code.split("\n");
+    const lineHeight = 22;
+    const Height = codeLines.length * lineHeight;
+    setcodeHeight(Height);
+  }, [selectedFile.code]);
+
+  const handleFileChange = (file: CodeStringInterface) => {
+    setSelectedFile(file);
   };
 
-  // Determine the style based on the current theme
-  const syntaxStyle = theme === "dark" ? vscDarkPlus : vscDarkPlus;
-
   return (
-    <section className="relative h-auto w-full">
-      <div className="absolute w-full h-auto max-h-[99%] overflow-y-auto top-0 right-0">
-        <SyntaxHighlighter
-          customStyle={{
-            boxSizing: "border-box",
-            lineHeight: "1.6",
-            fontSize: "1rem",
-            padding: "16px",
-            borderRadius: "2px",
-            border: "2px solid #283245",
-
-            width: "100%",
-            height: "100%",
-            overflow: "auto",
-          }}
-          language={language}
-          showLineNumbers
-          wrapLines
-          PreTag={"div"}
-          style={syntaxStyle}
-        >
-          {code}
-        </SyntaxHighlighter>
-      </div>
-      {showCopyButton && (
-        <div className="relative z-10 h-12 flex justify-end items-center mx-2 sm:mx-6">
-          <AnimatePresence>
-            {!copied ? (
-              <motion.button
-                key="copy"
-                className="sticky"
-                onClick={handleCopy}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-              >
-                Copy
-              </motion.button>
-            ) : (
-              <motion.div
-                key="copied"
-                className="flex items-center justify-center p-2 bg-green-500 rounded-full"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <FaCheck className="text-white" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+    <section
+      style={{ height: `${codeHeight}px` }}
+      className="relative min-h-20 border-2 my-2 max-h-[90vh]"
+    >
+      {controls === true && (
+        <div className="flexr-between absolute top-0 h-12 z-10 p-2 w-full">
+          <FileDropdown files={files} onFileChange={handleFileChange} />
+          <CopyToClipboard text={selectedFile.code} />
         </div>
       )}
+      <div
+        id="code_preview"
+        className="absolute w-full no-scrollbar  overflow-auto h-full top-0 "
+      >
+        <SyntaxHighlighter
+          customStyle={{
+            lineHeight: "20px",
+            fontFamily: "serif",
+            margin: "0px",
+            backgroundColor: `${CustomBG}`,
+            color: `${CustomText}`,
+            fontSize: "14px",
+            listStyle: "inside",
+            paddingTop: "50px",
+          }}
+          children={selectedFile.code}
+          showInlineLineNumbers
+          showLineNumbers
+          wrapLines
+          style={customtheme}
+          language={selectedFile.language}
+        />
+      </div>
+    </section>
+  );
+};
+
+;
+
+export const CodeViewCodeString = `
+"use client";
+import React, { useEffect, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
+import { useTheme } from "next-themes";
+import {
+  atomOneDark,
+  atomOneLight,
+} from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { CodeStringInterface } from "../CodeString";
+import FileDropdown from "./FileDropDown";
+import CopyToClipboard from "./CopyButton";
+
+interface CodeViewProps {
+  files: CodeStringInterface[];
+  controls?: boolean;
+}
+
+const CodeView = ({ files, controls }: CodeViewProps) => {
+  const { resolvedTheme } = useTheme();
+  const [theme, setTheme] = useState<string>();
+  const [codeHeight, setcodeHeight] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<CodeStringInterface>(
+    files[0]
+  );
+  useEffect(() => {
+    if (resolvedTheme) {
+      setTheme(resolvedTheme);
+    }
+  }, [resolvedTheme]);
+
+  const customtheme = theme === "dark" ? atomOneDark : atomOneLight;
+  const CustomBG = theme === "dark" ? "#09090B" : "white";
+  const CustomText = theme === "dark" ? "white" : "black";
+
+  useEffect(() => {
+    const codeLines = selectedFile.code.split("\n");
+    const lineHeight = 22;
+    const Height = codeLines.length * lineHeight;
+    setcodeHeight(Height);
+  }, [selectedFile.code]);
+
+  const handleFileChange = (file: CodeStringInterface) => {
+    setSelectedFile(file);
+  };
+
+  return (
+    <section
+      style={{ height: \`\${codeHeight}px\` }}
+      className="relative min-h-20 border-2 my-2 max-h-[90vh]"
+    >
+      {controls === true && (
+        <div className="flexr-between absolute top-0 h-12 z-10 p-2 w-full">
+          <FileDropdown files={files} onFileChange={handleFileChange} />
+          <CopyToClipboard text={selectedFile.code} />
+        </div>
+      )}
+      <div
+        id="code_preview"
+        className="absolute w-full no-scrollbar  overflow-auto h-full top-0 "
+      >
+        <SyntaxHighlighter
+          customStyle={{
+            lineHeight: "20px",
+            fontFamily: "serif",
+            margin: "0px",
+            backgroundColor:\`\${CustomBG}\`,
+            color: \`\${CustomText}\`,
+            fontSize: "14px",
+            listStyle: "inside",
+            paddingTop: "50px",
+          }}
+          children={selectedFile.code}
+          showInlineLineNumbers
+          showLineNumbers
+          wrapLines
+          style={customtheme}
+          language={selectedFile.language}
+        />
+      </div>
     </section>
   );
 };
 
 export default CodeView;
-
-export const CodeViewString = "";
+`;
