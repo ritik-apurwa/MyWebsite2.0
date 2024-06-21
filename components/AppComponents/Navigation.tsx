@@ -13,7 +13,7 @@ const Navigation = () => {
   };
 
   return (
-    <section className="p-4 bg-background text-foreground">
+    <section className="rp-p size-full flex-center bg-background text-foreground">
       <div className="flex items-center gap-x-2">
         {navigationLinks.map((links) => {
           const isActive = pathname === links.route;

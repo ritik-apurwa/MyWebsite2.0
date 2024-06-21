@@ -25,7 +25,7 @@ const MobileNav = () => {
   return (
     <section>
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger className="" asChild>
           <Button variant="outline" size="icon">
             <FiMenu />
           </Button>

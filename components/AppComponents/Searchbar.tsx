@@ -26,7 +26,7 @@ const Searchbar = () => {
   };
 
   return (
-    <div className="flex w-full justify-end">
+    <div className="size-full">
       <Sheet>
         <SheetTrigger className="w-full flex justify-end" asChild>
           <section>

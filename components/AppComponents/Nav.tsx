@@ -9,18 +9,17 @@ import Navigation from "./Navigation";
 
 const Nav = () => {
   return (
-    <header className="grid grid-cols-12 items-center w-full border-2 border-teal-600  ">
-
-      <div className="md:col-span-2 flexj-start border-red-400 border  col-span-6 size-full ">
+    <header className="container h-full mx-auto flex-center  grid grid-cols-12">
+      <div className="md:col-span-2 flexj-start rp-p   col-span-6 size-full ">
         <Link className="font-bold text-xl antialiased" href="/">
           HopeWeb
         </Link>
       </div>
 
-      <div className=" hidden border-purple-600 border-2 lg:flex md:col-span-5">
+      <div className=" hidden flexj-end  h-full lg:flex md:col-span-5">
         <Navigation />
       </div>
-      <div className="flex border-indigo-600 border-2 flex-row w-full  relative lg:col-span-5  col-span-6  gap-x-1">
+      <div className="flex  flexj-end  flex-row w-full  relative lg:col-span-5  col-span-6  gap-x-1">
         <Searchbar />
         <ModeToggle />
         <MobileNav />

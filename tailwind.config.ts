@@ -76,6 +76,11 @@ const config = {
     plugin(function ({ addBase, addComponents, addUtilities }) {
       addBase({});
       addComponents({
+
+
+        ".rp-p": {
+          "@apply px-2 md:px-3 lg:px-4 xl:px-5": {},
+        },
         ".flexj-start": {
           "@apply flex items-center justify-start": {},
         },
