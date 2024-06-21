@@ -5,6 +5,7 @@ import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { MdOutlineContactPage } from "react-icons/md";
 import { CiSquareInfo } from "react-icons/ci";
 
+
 interface NavigationLinks {
   id: number;
   icon: IconType;

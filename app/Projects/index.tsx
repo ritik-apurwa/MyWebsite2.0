@@ -20,7 +20,7 @@ const AllMyComponents: IComponent[] = [
     projectImg: ExpandingCardImg,
     title: "Expanding-Cards",
     description: "Expanding cards project click and expand the card ",
-    category: "HTML",
+    category: "React",
     file: ExpandingCardsFiles,
     component: <ExpandingCards />,
   },
@@ -31,7 +31,7 @@ const AllMyComponents: IComponent[] = [
     file: ProgressStepsFile,
     description:
       "In this project we will discuss about progress steps with will be increasing one by one with awesome animation ",
-    category: "HTML",
+    category: "React",
     component: <ProgressStep />,
   },
   {

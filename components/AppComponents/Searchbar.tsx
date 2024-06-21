@@ -3,13 +3,13 @@ import { Search, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { FaSearch } from "react-icons/fa";
-import { FiX } from "react-icons/fi";
 import AllMyComponents from "@/app/Projects";
-import { IComponent } from "@/constants";
 import Image from "next/image";
 import { Nothingfound } from "@/constants/media/LocalImages";
 import Link from "next/link";
+import { IComponent } from "@/app/types";
+import { SearchInput, SearchInputClose } from "@/app/Projects/ShadcnCustom/SearchInput";
+
 
 interface Project {
   id: string;
@@ -19,29 +19,10 @@ interface Project {
 }
 
 const Searchbar = () => {
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 500);
-    };
-
-    handleResize(); // Check the initial screen size
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-  };
-
-  const clearSearchTerm = () => {
-    setSearchTerm("");
   };
 
   return (
@@ -71,10 +52,11 @@ const Searchbar = () => {
           className="h-auto flex w-full bg-transparent mx-auto min-h-screen justify-center"
         >
           <div className="max-w-5xl w-full flex flex-col">
-            <SearchInput
-              onSearch={handleSearch}
-              clearSearchTerm={clearSearchTerm}
-            />
+            <div className="h-16 w-full gap-x-2 p-2 flexr-center">
+              <SearchInput onSearch={handleSearch} />
+              <SearchInputClose />
+            </div>
+
             {searchTerm.length === 0 ? (
               <>
                 <SeeResults />
@@ -102,57 +84,6 @@ interface SearchInputProps {
   clearSearchTerm: () => void;
 }
 
-const SearchInput = ({ onSearch, clearSearchTerm }: SearchInputProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    onSearch(value);
-  };
-
-  return (
-    <section className="flexr-center h-16 gap-x-2 w-full">
-      <div className="flex-grow ">
-        <div id="search_input" className="relative flex-grow">
-          <Input
-            type="text"
-            className="pl-10 py-2 rounded-md border border-gray-300 shadow-sm"
-            placeholder="Search for Component"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <Button
-            className="absolute top-0 flex-center left-0 size-10"
-            variant="ghost"
-            size="icon"
-          >
-            <FaSearch size={16} className="text-gray-500" />
-          </Button>
-          <Button
-            className="absolute top-0 right-0 flex-center size-10"
-            variant="ghost"
-            size="icon"
-            onClick={clearSearchTerm}
-          >
-            <FiX size={16} className="text-gray-500" />
-          </Button>
-        </div>
-      </div>
-      <div className="flex-center h-12">
-        <Button
-          asChild
-          variant="outline"
-          size="default"
-          onClick={clearSearchTerm}
-        >
-          <SheetTrigger>Clear</SheetTrigger>
-        </Button>
-      </div>
-    </section>
-  );
-};
-
 interface SearchResultsProps {
   searchTerm: string;
 }
@@ -161,10 +92,10 @@ const SearchResult = ({ searchTerm }: SearchResultsProps) => {
   const SD: IComponent[] = AllMyComponents;
 
   const filteredSD = SD.filter(
-    ({ title, description, code }) =>
+    ({ title, description, file }) =>
       title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      code.toLowerCase().includes(searchTerm.toLowerCase())
+      description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
