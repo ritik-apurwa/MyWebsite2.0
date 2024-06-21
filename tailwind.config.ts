@@ -12,10 +12,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -80,6 +76,12 @@ const config = {
     plugin(function ({ addBase, addComponents, addUtilities }) {
       addBase({});
       addComponents({
+        ".flexj-start": {
+          "@apply flex items-center justify-start": {},
+        },
+        ".flexj-end": {
+          "@apply flex items-center justify-end": {},
+        },
         ".flex-center": {
           "@apply flex items-center justify-center": {},
         },

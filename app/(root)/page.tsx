@@ -22,6 +22,16 @@ const Page = () => {
 
       <CodeView controls={true} files={CodeView2Code} />
       <CodeView controls={true} files={NormalText} />
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
+      <CodeView controls={true} files={CodeView2Code} />
+      <CodeView controls={true} files={NormalText} />
     </section>
   );
 };

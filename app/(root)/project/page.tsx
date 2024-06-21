@@ -1,7 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { Input } from "@/components/ui/input";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import AllMyComponents from "@/app/Projects";
 import VisibleAnimation from "@/app/Projects/MotionComponents/VisibleMotion";
@@ -9,7 +7,6 @@ import ProjectCard from "@/components/AppComponents/ProjectCard";
 import { Logo } from "@/constants/media/LocalImages";
 import Dropdown from "@/app/Projects/ShadcnCustom/Dropdown";
 import { categories } from "@/app/types";
-import { SearchInput } from "@/app/Projects/ShadcnCustom/SearchInput";
 import { ProjectSearchInput } from "@/app/Projects/Inputs/Input";
 
 const ProjectPage: React.FC = () => {
@@ -29,16 +26,20 @@ const ProjectPage: React.FC = () => {
   );
 
   return (
-    <section className="lg:p-8 sm:p-4 py-2">
-      <div id="filter_and_search_div" className="flex flex-col gap-4">
-        <div className="flex items-center  h-16 w-full gap-x-4">
+    <section className="container mx-auto p-1 md:p-2 lg:p-4 flex flex-col lg:gap-y-3">
+      <section
+        id="search_and_filter"
+        className="grid grid-cols-12 h-14 items-center gap-4 mb-4"
+      >
+        <div className="col-span-9">
           <ProjectSearchInput
             lable="projects"
             placeholder="Find Projects"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
+        </div>
+        <div className="col-span-3">
           <Dropdown
             ItemArray={categories}
             onValueChange={handleCategoryChange}
@@ -46,53 +47,55 @@ const ProjectPage: React.FC = () => {
             name="filter"
           />
         </div>
+      </section>
 
-        <div id="result_div">
-          <h1 className="text-xl font-bold text-foreground">
-            {searchTerm
-              ? `Searching for "${searchTerm}" in ${category || "All"} Category`
-              : category
-              ? `Category: ${category}`
-              : "All Components"}
-          </h1>
-
-          <div className="add-grid w-full items-center justify-center gap-4 py-4">
-            {/* No Results Found */}
-            {searchTerm && filteredComponents.length === 0 ? (
-              <VisibleAnimation id="image-1">
-                <div className="relative w-full">
-                  <h1 className="text-center absolute bottom-0 w-full text-gray-500">
+      <div
+        className="prose-base prose-headings:my-4"
+        id="filter_and_search_div"
+      >
+        <h2>
+          {searchTerm
+            ? `Searching for "${searchTerm}" in ${category || "All"} Category`
+            : category
+            ? `Category: ${category}`
+            : "All Components"}
+        </h2>
+        <div>
+          {filteredComponents.length === 0 ? (
+            <>
+              <VisibleAnimation id="no-results">
+                <div className="size-full relative flex-center">
+                  <Image
+                    src="https://cdn.dribbble.com/users/453325/screenshots/5573953/empty_state.png"
+                    height={800}
+                    width={600}
+                    alt="No results"
+                    className="aspect-auto rounded-md size-full"
+                  />
+                  <p className="absolute bottom-0  pb-4 text-black">
                     No results found for "{searchTerm}"
-                  </h1>
-                  <div className="flex-center w-full h-96">
-                    <Image src={Logo} height={200} width={200} alt="noufound" />
-                  </div>
+                  </p>
                 </div>
               </VisibleAnimation>
-            ) : (
-              // Render Components
-
-              filteredComponents.map(
-                ({
-                  id,
-                  title,
-                  description,
-                  projectImg,
-                  category: compCategory,
-                }) =>
-                  (category === "All" || category === compCategory) && (
-                    <VisibleAnimation id="Project_cards">
+            </>
+          ) : (
+            <>
+              <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredComponents.map((item) => (
+                  <VisibleAnimation id={item.id.toString()}>
+                    <div>
                       <ProjectCard
-                        ProjectId={id}
-                        ProjectImage={projectImg}
-                        ProjectTitle={title}
-                        ProjectDescription={description}
+                        ProjectId={item.id}
+                        ProjectImage={item.projectImg}
+                        ProjectTitle={item.title}
+                        ProjectDescription={item.description}
                       />
-                    </VisibleAnimation>
-                  )
-              )
-            )}
-          </div>
+                    </div>
+                  </VisibleAnimation>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
