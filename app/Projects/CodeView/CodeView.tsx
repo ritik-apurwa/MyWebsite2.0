@@ -70,19 +70,18 @@ export const CodeView = ({ files, controls }: CodeViewProps) => {
             listStyle: "inside",
             paddingTop: "50px",
           }}
-          children={selectedFile.code}
           showInlineLineNumbers
           showLineNumbers
           wrapLines
           style={customtheme}
           language={selectedFile.language}
-        />
+        >
+          {selectedFile.code}
+        </SyntaxHighlighter>
       </div>
     </section>
   );
 };
-
-;
 
 export const CodeViewCodeString = `
 "use client";

@@ -36,7 +36,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     if (onSearch) {
       onSearch(value);
     }
-  }, [value]);
+  }, [value, onSearch]);
 
   return (
     <section className=" flex-center size-full">

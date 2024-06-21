@@ -73,7 +73,7 @@ const ProjectPage: React.FC = () => {
                     className="aspect-auto rounded-md size-full"
                   />
                   <p className="absolute bottom-0  pb-4 text-black">
-                    No results found for "{searchTerm}"
+                    No results found for {searchTerm}
                   </p>
                 </div>
               </VisibleAnimation>
@@ -82,7 +82,7 @@ const ProjectPage: React.FC = () => {
             <>
               <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredComponents.map((item) => (
-                  <VisibleAnimation id={item.id.toString()}>
+                  <VisibleAnimation key={item.id} id={item.id.toString()}>
                     <div>
                       <ProjectCard
                         ProjectId={item.id}

@@ -33,7 +33,7 @@ export const SearchInput = ({ onSearch, label }: SearchInputProps) => {
     if (onSearch) {
       onSearch(value);
     }
-  }, [value]);
+  }, [value, onSearch]);
 
   return (
     <section className="size-full flex-center">

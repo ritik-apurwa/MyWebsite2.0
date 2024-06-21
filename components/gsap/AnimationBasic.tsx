@@ -173,8 +173,8 @@ export const AnimationT = () => {
     <section className="border flex-center py-2 flex-col">
       <div className="flex flex-col w-full p-2 gap-y-2">
         <div className="flex flex-col w-full py-10 px-2 gap-y-2 border">
-          {heading.map((head) => (
-            <div id="header" className=" border p-3 capitalize ">
+          {heading.map((index, head) => (
+            <div key={index} id="header" className=" border p-3 capitalize ">
               <h1 className="header">{head}</h1>
             </div>
           ))}

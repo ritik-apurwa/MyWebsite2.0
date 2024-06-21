@@ -64,7 +64,7 @@ const Searchbar = () => {
             ) : (
               <>
                 <div className="bg-background text-foreground mb-2 rounded-xl p-3">
-                  Results for "{searchTerm}"
+                  Results for {searchTerm}
                 </div>
 
                 <SearchResult searchTerm={searchTerm} />
@@ -112,7 +112,7 @@ const SearchResult = ({ searchTerm }: SearchResultsProps) => {
                   <Link
                     href={projectUrl}
                     className="border-2 bg-background text-foreground flex flex-col rounded-xl p-2"
-                    key={component.id}
+                    key={component.id.toString()}
                   >
                     <div className="flex-center h-52 p-2  rounded-xl overflow-hidden w-full">
                       <Image
