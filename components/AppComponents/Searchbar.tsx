@@ -119,7 +119,7 @@ const SearchResult = ({ searchTerm }: SearchResultsProps) => {
                         src={component.projectImg}
                         height={500}
                         width={500}
-                        className=" rounded-xl"
+                        className=" rounded-xl size-auto"
                         alt={component.title}
                       />
                     </div>
